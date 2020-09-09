@@ -45,6 +45,23 @@ Factory.blueprint('App/Models/Meeting', async () => {
   }
 })
 
+Factory.blueprint('App/Models/Role', async (fake, i, data) => {
+  const roles = {
+    0: 'admin',
+    1: 'user'
+  }
+  return {
+    role: Object.keys(roles)[i]
+  }
+})
+
+Factory.blueprint('App/Models/Department', async (fake, i) => {
+  const departments = ['D2', 'D6', 'D9']
+  return {
+    name: departments[i]
+  }
+})
+
 function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min +1) + min)
 }

@@ -14,8 +14,8 @@
 const Factory = use('Factory')
 
 class RoomSeeder {
-  async run () {
-    const rooms = await Factory
+  static async run () {
+    await Factory
       .model('App/Models/Room')
       .createMany(5)
   }

@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| MeetingSeeder
+| RoleSeeder
 |--------------------------------------------------------------------------
 |
 | Make use of the Factory instance to seed database with dummy data or
@@ -12,17 +12,13 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
-const Room = use('App/Models/Room')
 
-class MeetingSeeder {
+class RoleSeeder {
   static async run () {
-    const meeting = await Factory
-      .model('App/Models/Meeting')
-      .make()
-      
-    const activedRoom = await Room.first()
-    await activedRoom.meeting().save(meeting)
+    await Factory
+      .model('App/Models/Role')
+      .createMany(2)
   }
 }
 
-module.exports = MeetingSeeder
+module.exports = RoleSeeder
