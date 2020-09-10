@@ -8,7 +8,10 @@ class Meeting extends Model {
     return this.hasOne('App/Models/Room')
   }
   user() {
-    return this.hasMany('App/Models/User')
+    return this
+      .belongsToMany('App/Models/User')
+      .pivotTable('user_meetings')
+      .withTimestamps()
   }
 }
 

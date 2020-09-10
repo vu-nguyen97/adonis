@@ -18,8 +18,9 @@ class MeetingSeeder {
   static async run () {
     const meeting = await Factory
       .model('App/Models/Meeting')
+      // .create()
       .make()
-      
+    
     const activedRoom = await Room.first()
     await activedRoom.meeting().save(meeting)
   }

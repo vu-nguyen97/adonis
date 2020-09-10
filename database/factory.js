@@ -12,9 +12,15 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-
+const moment = require('moment')
 const Factory = use('Factory')
 const Hash = use('Hash')
+
+const departments = ['D2', 'D6', 'D9']
+const roles = {
+  1: 'admin',
+  2: 'user'
+}
 
 Factory.blueprint('App/Models/User', async (faker, i) => {
   // const number = randomInteger(0, 1000);
@@ -25,9 +31,11 @@ Factory.blueprint('App/Models/User', async (faker, i) => {
   // }
 
   return {
-    username: ['user1', 'admin1'][i],
-    email: ['user1@gmail.com', 'admin1@gmail.com'][i],
-    password: await Hash.make('123456')
+    username: ['admin1', 'user1'][i],
+    email: ['admin1@gmail.com', 'user1@gmail.com'][i],
+    password: await Hash.make('123456'),
+    role_id: [1, 2][i],
+    department_id: [1, 2][i]
   }
 })
 
@@ -39,24 +47,30 @@ Factory.blueprint('App/Models/Room', async (faker, i, data) => {
 })
 
 Factory.blueprint('App/Models/Meeting', async () => {
+  const current_date = moment(new Date()).format('YYYY-MM-DD')
   return {
-    start_time: '2020-09-08 09:00:00',
-    end_time: '2020-09-08 10:00:00',
+    start_time: `${current_date} 09:00:00`,
+    end_time: `${current_date} 10:00:00`,
+    // registered_user: 1,
+    // room_id: 1
   }
 })
 
+// Factory.blueprint('App/Models/UserMeeting', async () => {
+//   return {
+//     is_created_user: true,
+//     user_id: 1,
+//     meeting_id: 1
+//   }
+// })
+
 Factory.blueprint('App/Models/Role', async (fake, i, data) => {
-  const roles = {
-    0: 'admin',
-    1: 'user'
-  }
   return {
-    role: Object.keys(roles)[i]
+    role: Object.values(roles)[i]
   }
 })
 
 Factory.blueprint('App/Models/Department', async (fake, i) => {
-  const departments = ['D2', 'D6', 'D9']
   return {
     name: departments[i]
   }
