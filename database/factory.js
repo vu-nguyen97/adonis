@@ -14,7 +14,6 @@
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const moment = require('moment')
 const Factory = use('Factory')
-const Hash = use('Hash')
 
 const departments = ['D2', 'D6', 'D9']
 const roles = {
@@ -23,17 +22,10 @@ const roles = {
 }
 
 Factory.blueprint('App/Models/User', async (faker, i) => {
-  // const number = randomInteger(0, 1000);
-  // return {
-  //   username: `test${number}`,
-  //   email: `email${number}@gmail.com`,
-  //   password: await Hash.make(faker.password())
-  // }
-
   return {
     username: ['admin1', 'user1'][i],
     email: ['admin1@gmail.com', 'user1@gmail.com'][i],
-    password: await Hash.make('123456'),
+    password: '123',
     role_id: [1, 2][i],
     department_id: [1, 2][i]
   }
@@ -75,7 +67,3 @@ Factory.blueprint('App/Models/Department', async (fake, i) => {
     name: departments[i]
   }
 })
-
-function randomInteger(min, max) {
-  return Math.floor(Math.random() * (max - min +1) + min)
-}

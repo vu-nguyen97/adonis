@@ -15,7 +15,11 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-Route.post('users', 'UserController.store')
+Route.post('user', 'UserController.store')
+Route.get('user', 'UserController.index')
+
+Route.post('login', 'AuthController.login')
+
 Route.post('room/post', 'RoomController.store')
 Route.post('meeting/post', 'MeetingController.store')
 

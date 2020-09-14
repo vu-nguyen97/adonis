@@ -1,33 +1,48 @@
 'use strict'
 
 const User = use('App/Models/User')
+const roles = {
+  1: 'admin',
+  2: 'user'
+}
 
 class UserController {
-  // creating and saving a new user (sign-up)
   async store ({ request, response }) {
     try {
-      // getting data passed within the request
-      const data = request.only(['username', 'email', 'password'])
+      const data = request.only(['username', 'email', 'password', 'role_id', 'department_id'])
+      if (!data.role_id) {
+        data.role_id = Object.keys(roles)[1]
+      }
 
-      // looking for user in database
-      const userExists = await User.findBy('email', data.email)
+      const emailExists = await User.findBy('email', data.email)
+      const usernameExists = await User.findBy('username', data.username)
       
-      // if user exists don't save
-      if (userExists) {
+      if (emailExists || usernameExists) {
         return response
           .status(400)
           .send({ message: { error: 'User already registered' } })
       }
 
-      // if user doesn't exist, proceeds with saving him in DB
       const user = await User.create(data)
-
       return user
     } catch (err) {
       return response
         .status(err.status)
         .send(err)
     }
+  }
+
+  async index ({request, response}) {
+    const data = request.all()
+    if (data.email) {
+      const user = await User.findBy('email', data.email)
+      return user
+    }
+    if (data.username) {
+      const user = await User.findBy('username', data.username)
+      return user
+    }
+    return response.send('Error get user: email and username invaild')
   }
 }
 
