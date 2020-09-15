@@ -6,8 +6,8 @@ const Room = use('App/Models/Room')
 class MeetingController {
   async store ({ request, response }) {
     try {
-      const data = request.only(['user_id', 'room_id', 'start_time', 'end_time'])
-      const { start_time, end_time, user_id, room_id } = data
+      const data = request.only(['user_id', 'room_id', 'start_time', 'end_time', 'type'])
+      const { start_time, end_time, user_id, room_id, type } = data
 
       const roomExist = Room.findBy('id', room_id)
       if(!roomExist) {
@@ -38,7 +38,7 @@ class MeetingController {
         })
       }
 
-      const meeting = await Meeting.create({start_time, end_time, room_id})
+      const meeting = await Meeting.create({start_time, end_time, room_id, type})
       await meeting.users().attach(user_id, (row) => {
         if (row.user_id == user_id) {
           row.is_created_user = true

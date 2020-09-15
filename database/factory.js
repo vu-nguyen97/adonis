@@ -20,6 +20,13 @@ const roles = {
   1: 'admin',
   2: 'user'
 }
+const meetingType = {
+  0: "Meeting",
+  1: "Event",
+  2: "Birthday",
+  3: "Conference",
+  4: "Party",
+}
 
 Factory.blueprint('App/Models/User', async (faker, i) => {
   return {
@@ -43,6 +50,7 @@ Factory.blueprint('App/Models/Meeting', async () => {
   return {
     start_time: `${current_date} 09:00:00`,
     end_time: `${current_date} 10:00:00`,
+    type: Object.keys(meetingType)[0]
     // registered_user: 1,
     // room_id: 1
   }

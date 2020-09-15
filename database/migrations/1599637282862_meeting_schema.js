@@ -8,6 +8,7 @@ class MeetingSchema extends Schema {
     this.create('meetings', (table) => {
       table.increments()
       table.integer('room_id').unsigned().references('id').inTable('rooms')
+      table.integer('type').notNullable()
       table.datetime('start_time').notNullable()
       table.datetime('end_time').notNullable()
       table.timestamps()
