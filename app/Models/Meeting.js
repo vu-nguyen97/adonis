@@ -7,7 +7,7 @@ class Meeting extends Model {
   room() {
     return this.hasOne('App/Models/Room')
   }
-  user() {
+  users() {
     return this
       .belongsToMany('App/Models/User')
       .pivotTable('user_meetings')

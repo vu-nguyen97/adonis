@@ -6,9 +6,10 @@ const Room = use('App/Models/Room')
 class MeetingController {
   async store ({ request, response }) {
     try {
-      const data = request.only(['room_id', 'start_time', 'end_time'])
+      const data = request.only(['user_id', 'room_id', 'start_time', 'end_time'])
+      const { start_time, end_time, user_id, room_id } = data
 
-      const roomExist = Room.findBy('id', data.room_id)
+      const roomExist = Room.findBy('id', room_id)
       if(!roomExist) {
         return response.status(400).send({
           message: { error: 'Room not found!' }
@@ -19,15 +20,15 @@ class MeetingController {
         .query()
         .where(function(){
           this
-            .where('start_time', '<=', data.start_time).andWhere('end_time', '>=', data.end_time)
+            .where('start_time', '<=', start_time).andWhere('end_time', '>=', end_time)
         })
         .orWhere(function(){
           this
-            .where('start_time', '<=', data.start_time).andWhere('end_time', '>', data.start_time)
+            .where('start_time', '<=', start_time).andWhere('end_time', '>', start_time)
         })
         .orWhere(function(){
           this
-            .where('start_time', '>=', data.start_time).andWhere('start_time', '<', data.end_time)
+            .where('start_time', '>=', start_time).andWhere('start_time', '<', end_time)
         })
         .count()
 
@@ -37,7 +38,12 @@ class MeetingController {
         })
       }
 
-      const meeting = Meeting.create(data)
+      const meeting = await Meeting.create({start_time, end_time, room_id})
+      await meeting.users().attach(user_id, (row) => {
+        if (row.user_id == user_id) {
+          row.is_created_user = true
+        }
+      })
       return meeting
 
     } catch (err) {

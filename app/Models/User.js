@@ -40,10 +40,11 @@ class User extends Model {
   department () {
     return this.hasOne('App/Models/Department')
   }
-  meeting () {
+  meetings () {
     return this
       .belongsToMany('App/Models/Meeting')
       .pivotTable('user_meetings')
+      .withPivot(['is_created_user'])
       .withTimestamps()
   }
 }

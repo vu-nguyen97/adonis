@@ -17,6 +17,7 @@
 const Route = use('Route')
 Route.post('user', 'UserController.store')
 Route.get('user', 'UserController.index')
+Route.get('user/meetings', 'UserController.meeting')
 
 Route.post('login', 'AuthController.login')
 

@@ -23,7 +23,7 @@ class UserMeetingSeeder {
     
     const activedUser = await User.first()
     const activedMeeting = await Meeting.first()
-    await activedUser.meeting().attach(activedMeeting.id, (row) => {
+    await activedUser.meetings().attach(activedMeeting.id, (row) => {
       row.is_created_user = true
     })
   }
