@@ -18,17 +18,21 @@ class MeetingController {
 
       const meetingExist = await Meeting
         .query()
-        .where(function(){
+        .where('room_id', room_id)
+        .andWhere(function() {
           this
-            .where('start_time', '<=', start_time).andWhere('end_time', '>=', end_time)
-        })
-        .orWhere(function(){
-          this
-            .where('start_time', '<=', start_time).andWhere('end_time', '>', start_time)
-        })
-        .orWhere(function(){
-          this
-            .where('start_time', '>=', start_time).andWhere('start_time', '<', end_time)
+            .where(function(){
+              this
+                .where('start_time', '<=', start_time).andWhere('end_time', '>=', end_time)
+            })
+            .orWhere(function(){
+              this
+                .where('start_time', '<=', start_time).andWhere('end_time', '>', start_time)
+            })
+            .orWhere(function(){
+              this
+                .where('start_time', '>=', start_time).andWhere('start_time', '<', end_time)
+            })
         })
         .count()
 
