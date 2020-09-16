@@ -22,7 +22,7 @@ class MeetingSeeder {
       .make()
     
     const activedRoom = await Room.first()
-    await activedRoom.meeting().save(meeting)
+    await activedRoom.meetings().save(meeting)
   }
 }
 

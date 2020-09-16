@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class Role extends Model {
-  user() {
+  users() {
     return this.hasMany('App/Models/User')
   }
 }

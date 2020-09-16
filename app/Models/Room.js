@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class Room extends Model {
-  meeting() {
+  meetings() {
     return this.hasMany('App/Models/Meeting')
   }
 }

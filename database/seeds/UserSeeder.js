@@ -24,8 +24,8 @@ class UserSeeder {
     
     // const activedRole = await Role.first()
     // const activedDepartment = await Department.first()
-    // await activedRole.user().save(user)
-    // await activedDepartment.user().save(user)
+    // await activedRole.users().save(user)
+    // await activedDepartment.users().save(user)
   }
 }
 

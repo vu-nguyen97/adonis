@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class Meeting extends Model {
   room() {
-    return this.hasOne('App/Models/Room')
+    return this.belongsTo('App/Models/Room')
   }
   users() {
     return this
