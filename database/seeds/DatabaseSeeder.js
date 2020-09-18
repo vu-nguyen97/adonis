@@ -6,6 +6,7 @@ const UserSeeder = require('./UserSeeder');
 const RoleSeeder = require('./RoleSeeder');
 const DepartmentSeeder = require('./DepartmentSeeder');
 const UserMeetingSeeder = require('./UserMeetingSeeder');
+const MeetingTypeSeeder = require('./MeetingTypeSeeder');
 
 class DatabaseSeeder {
   async run() {
@@ -15,6 +16,7 @@ class DatabaseSeeder {
     await RoleSeeder.run()
     await UserSeeder.run()
     await RoomSeeder.run()
+    await MeetingTypeSeeder.run()
     await MeetingSeeder.run()
     await UserMeetingSeeder.run()
   }

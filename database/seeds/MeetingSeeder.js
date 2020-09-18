@@ -13,6 +13,7 @@
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
 const Room = use('App/Models/Room')
+const MeetingType = use('App/Models/MeetingType')
 
 class MeetingSeeder {
   static async run () {
@@ -22,6 +23,8 @@ class MeetingSeeder {
       .make()
     
     const activedRoom = await Room.first()
+    const activedMeetingType = await MeetingType.first()
+    await activedMeetingType.meetings().save(meeting)
     await activedRoom.meetings().save(meeting)
   }
 }

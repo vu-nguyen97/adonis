@@ -53,7 +53,9 @@ class UserController {
     const meetings = await UserMeeting
       .query()
       .where('user_id', userId)
-      .with('meeting')
+      .with('meeting', builder => {
+        builder.with('room')
+      })
       .fetch()
 
     return meetings

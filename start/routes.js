@@ -24,7 +24,9 @@ Route.post('login', 'AuthController.login')
 Route.post('room-list/', 'RoomController.store')
 Route.get('room-list/', 'RoomController.index')
 
+Route.put('room-list/', 'MeetingController.update')
 Route.post('meeting/', 'MeetingController.store')
+Route.get('meeting/', 'MeetingController.index')
 
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
