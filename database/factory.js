@@ -28,13 +28,23 @@ const meetingTypes = {
   4: "Party",
 }
 
-Factory.blueprint('App/Models/User', async (faker, i) => {
+const random = (min, max) => {
+  return Math.floor(min + Math.random() * (max - min + 1))
+}
+
+Factory.blueprint('App/Models/User', async (faker, i, data) => {
+  const isAdmin = i == 0 ? true : false
+  const username = isAdmin ? 'admin' : `user${i}`
+  const email = isAdmin ? 'admin@gmail.com' : `user${i}@gmail.com`
+  const role_id = isAdmin ? 1 : 2
+  const department_id = random(1, 3)
+
   return {
-    username: ['admin1', 'user1'][i],
-    email: ['admin1@gmail.com', 'user1@gmail.com'][i],
-    password: '123',
-    role_id: [1, 2][i],
-    department_id: [1, 2][i]
+    username,
+    email,
+    role_id,
+    department_id,
+    password: '123'
   }
 })
 

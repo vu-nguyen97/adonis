@@ -27,6 +27,7 @@ Route.get('room-list/', 'RoomController.index')
 Route.put('room-list/', 'MeetingController.update')
 Route.post('meeting/', 'MeetingController.store')
 Route.get('meeting/', 'MeetingController.index')
+Route.post('meeting/add-person', 'UserMeetingController.store')
 
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }

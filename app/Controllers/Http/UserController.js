@@ -1,6 +1,5 @@
 'use strict'
 
-const Database = use('Database')
 const UserMeeting = use('App/Models/UserMeeting')
 const User = use('App/Models/User')
 const roles = {
@@ -34,21 +33,25 @@ class UserController {
     }
   }
 
-  async index ({request, response}) {
-    const data = request.all()
-    if(data.id) {
-      return await User.findBy('id', data.id)
-    }
-    if (data.email) {
-      return await User.findBy('email', data.email)
-    }
-    if (data.username) {
-      return await User.findBy('username', data.username)
-    }
-    return response.send('Error get user: email and username invaild')
+  // async index ({request, response}) {
+  //   const data = request.all()
+  //   if(data.id) {
+  //     return await User.findBy('id', data.id)
+  //   }
+  //   if (data.email) {
+  //     return await User.findBy('email', data.email)
+  //   }
+  //   if (data.username) {
+  //     return await User.findBy('username', data.username)
+  //   }
+  //   return response.send('Error get user: email and username invaild')
+  // }
+
+  async index () {
+    return User.all()
   }
 
-  async meeting ({request, response}) {
+  async meeting ({ request, response }) {
     const userId = request.input('id')
     const meetings = await UserMeeting
       .query()

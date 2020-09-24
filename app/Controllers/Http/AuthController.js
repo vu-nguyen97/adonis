@@ -18,8 +18,17 @@ class AuthController {
       return 'Log in fail'
     }
 
-    await auth.attempt(email, password)
-    return 'Logged in successfully' 
+    const userAuth = await auth.attempt(email, password)
+    const { id, username, role_id, department_id } = user
+    
+    return {
+      id,
+      role_id,
+      email: user.email,
+      username,
+      department_id,
+      token: userAuth.token
+    }
   }
 }
 

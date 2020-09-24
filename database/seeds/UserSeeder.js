@@ -19,7 +19,7 @@ class UserSeeder {
   static async run () {
     const user = await Factory
       .model('App/Models/User')
-      .createMany(2)
+      .createMany(11)
       // .make()
     
     // const activedRole = await Role.first()
