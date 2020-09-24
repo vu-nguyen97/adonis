@@ -5,10 +5,12 @@ const Room = use('App/Models/Room')
 const MeetingType = use('App/Models/MeetingType')
 
 class MeetingController {
-  async store ({ request, response }) {
+  async store ({ request, auth, response }) {
     try {
-      const data = request.only(['user_id', 'room_id', 'start_time', 'end_time', 'meeting_type_id'])
-      const { start_time, end_time, user_id, room_id, meeting_type_id } = data
+      const data = request.only(['room_id', 'start_time', 'end_time', 'meeting_type_id'])
+      const { start_time, end_time, room_id, meeting_type_id } = data
+      const user = await auth.getUser()
+      const user_id = user.id
 
       if (!meeting_type_id) {
         return response.send({

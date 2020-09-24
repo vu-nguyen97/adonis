@@ -15,19 +15,24 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-Route.post('user', 'UserController.store')
-Route.get('user', 'UserController.index')
-Route.get('user/meetings', 'UserController.meeting')
 
 Route.post('login', 'AuthController.login')
 
-Route.post('room-list/', 'RoomController.store')
-Route.get('room-list/', 'RoomController.index')
+Route.group(() => {
+  Route.post('user', 'UserController.store')
+  Route.get('user', 'UserController.index')
 
-Route.put('room-list/', 'MeetingController.update')
-Route.post('meeting/', 'MeetingController.store')
-Route.get('meeting/', 'MeetingController.index')
-Route.post('meeting/add-person', 'UserMeetingController.store')
+  Route.get('user/meetings', 'UserController.meeting')
+
+  Route.post('room-list/', 'RoomController.store')
+  Route.get('room-list/', 'RoomController.index')
+  
+  Route.put('room-list/', 'MeetingController.update')
+  Route.post('meeting/', 'MeetingController.store')
+  Route.get('meeting/', 'MeetingController.index')
+  Route.post('meeting/add-person', 'UserMeetingController.store')
+
+}).middleware('auth')
 
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }

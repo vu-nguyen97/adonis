@@ -51,11 +51,11 @@ class UserController {
     return User.all()
   }
 
-  async meeting ({ request, response }) {
-    const userId = request.input('id')
+  async meeting ({ auth, request, response }) {
+    const user = await auth.getUser()
     const meetings = await UserMeeting
       .query()
-      .where('user_id', userId)
+      .where('user_id', user.id)
       .with('meeting', builder => {
         builder.with('room')
       })
