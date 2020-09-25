@@ -18,7 +18,7 @@ class MeetingController {
         })
       }
 
-      const roomExist = Room.findBy('id', room_id)
+      const roomExist = await Room.findBy('id', room_id)
       if(!roomExist) {
         return response.send({
           message: { error: 'Room not found!' }

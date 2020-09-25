@@ -19,18 +19,18 @@ const Route = use('Route')
 Route.post('login', 'AuthController.login')
 
 Route.group(() => {
-  Route.post('user', 'UserController.store')
+  Route.post('user', 'UserController.store').validator('User')
   Route.get('user', 'UserController.index')
 
   Route.get('user/meetings', 'UserController.meeting')
 
-  Route.post('room-list/', 'RoomController.store')
+  Route.post('room-list/', 'RoomController.store').validator('Room')
   Route.get('room-list/', 'RoomController.index')
   
   Route.put('room-list/', 'MeetingController.update')
-  Route.post('meeting/', 'MeetingController.store')
+  Route.post('meeting/', 'MeetingController.store').validator('Meeting')//
   Route.get('meeting/', 'MeetingController.index')
-  Route.post('meeting/add-person', 'UserMeetingController.store')
+  Route.post('meeting/add-person', 'UserMeetingController.store').validator('UserMeeting')//
 
 }).middleware('auth')
 
