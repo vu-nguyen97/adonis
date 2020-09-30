@@ -19,18 +19,21 @@ const Route = use('Route')
 Route.post('login', 'AuthController.login')
 
 Route.group(() => {
+  Route.post('token', 'AuthController.refreshToken')
+  
   Route.post('user', 'UserController.store').validator('User')
   Route.get('user', 'UserController.index')
-
   Route.get('user/meetings', 'UserController.meeting')
 
   Route.post('room-list/', 'RoomController.store').validator('Room')
   Route.get('room-list/', 'RoomController.index')
   
-  Route.put('room-list/', 'MeetingController.update')
-  Route.post('meeting/', 'MeetingController.store').validator('Meeting')//
-  Route.get('meeting/', 'MeetingController.index')
-  Route.post('meeting/add-person', 'UserMeetingController.store').validator('UserMeeting')//
+  Route.put('meeting/', 'MeetingController.update').validator('Meeting')
+  Route.post('meeting/', 'MeetingController.store').validator('Meeting')
+  Route.get('meeting/:meeting_id', 'MeetingController.index')
+
+  Route.post('meeting/add-person', 'UserMeetingController.store').validator('UserMeeting')
+  Route.delete('meeting/add-person', 'UserMeetingController.destroy')
 
 }).middleware('auth')
 

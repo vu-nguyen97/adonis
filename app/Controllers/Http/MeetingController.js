@@ -1,8 +1,6 @@
 'use strict'
 
 const Meeting = use('App/Models/Meeting')
-const Room = use('App/Models/Room')
-const MeetingType = use('App/Models/MeetingType')
 
 class MeetingController {
   async store ({ request, auth, response }) {
@@ -11,19 +9,6 @@ class MeetingController {
       const { start_time, end_time, room_id, meeting_type_id } = data
       const user = await auth.getUser()
       const user_id = user.id
-
-      if (!meeting_type_id) {
-        return response.send({
-          message: { error: 'Not found this meeting type' }
-        })
-      }
-
-      const roomExist = await Room.findBy('id', room_id)
-      if(!roomExist) {
-        return response.send({
-          message: { error: 'Room not found!' }
-        })
-      }
 
       const meetingExist = await Meeting
         .query()
@@ -55,10 +40,8 @@ class MeetingController {
     const data = request.only(['id', 'room_id', 'start_time', 'end_time', 'meeting_type_id'])
     const { id, start_time, end_time, room_id, meeting_type_id } = data
 
-    const meetingTypeExist = await MeetingType.find(meeting_type_id)
-    const roomExist = await Room.find(room_id)
     const meeting = await Meeting.find(id)
-    if (!meeting || !meetingTypeExist || !roomExist) {
+    if (!meeting) {
       return response.status(500).send('Error! Can\'t update this meeting.')
     }
 
@@ -84,8 +67,8 @@ class MeetingController {
     return await meeting.save()
   }
 
-  async index ({request, response}) {
-    const meeting_id = request.input('meeting_id')
+  async index ({params, response}) {
+    const meeting_id = params.meeting_id
     const meeting = await Meeting
       .query()
       .where('id', meeting_id)

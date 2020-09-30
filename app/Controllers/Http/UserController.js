@@ -38,11 +38,10 @@ class UserController {
   // }
 
   async index ({ request }) {
-    const data = request.only(['fetch_user_joined_meeting', 'meeting_id'])
-    const fetchUserJoinedMeeting = data.fetch_user_joined_meeting
+    const data = request.only(['meeting_id'])
 
     const users = await User.all()
-    if (!fetchUserJoinedMeeting) {
+    if (!data.meeting_id) {
       return users
     }
 
@@ -66,6 +65,7 @@ class UserController {
       .where('user_id', user.id)
       .with('meeting', builder => {
         builder.with('room')
+        builder.with('users')
       })
       .fetch()
 

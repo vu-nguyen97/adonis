@@ -11,6 +11,7 @@ class Meeting extends Model {
     return this
       .belongsToMany('App/Models/User')
       .pivotTable('user_meetings')
+      .withPivot(['is_created_user'])
       .withTimestamps()
   }
 

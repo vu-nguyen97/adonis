@@ -43,6 +43,22 @@ class CustomValidationProvider extends ServiceProvider {
       throw 'User joined the meeting';
     }
   }
+
+  async roomExistsFn(data, field, message, args, get) {
+    const roomId = get(data, field)
+    const room = await use('App/Models/Room').find(roomId)
+    if (!room) {
+      throw 'Room not found!'
+    }
+  }
+
+  async meetingTypeExistsFn(data, field, message, args, get) {
+    const meetingTypeId = get(data, field)
+    const meetingType = await use('App/Models/MeetingType').find(meetingTypeId)
+    if (!meetingType) {
+      throw 'Meeting type not found!'
+    }
+  }
   
   /**
    * Attach context getter when all providers have
@@ -57,6 +73,8 @@ class CustomValidationProvider extends ServiceProvider {
     Validator.extend('userExists', this.userExistsFn);
     Validator.extend('meetingExists', this.meetingExistsFn);
     Validator.extend('userMeetingExists', this.userMeetingExistsFn);
+    Validator.extend('roomExists', this.roomExistsFn);
+    Validator.extend('meetingTypeExists', this.meetingTypeExistsFn);
   }
 }
 
