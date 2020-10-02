@@ -32,7 +32,7 @@ const random = (min, max) => {
   return Math.floor(min + Math.random() * (max - min + 1))
 }
 
-Factory.blueprint('App/Models/User', async (faker, i, data) => {
+Factory.blueprint('App/Models/User', (faker, i, data) => {
   const isAdmin = i == 0 ? true : false
   const username = isAdmin ? 'admin' : `user${i}`
   const email = isAdmin ? 'admin@gmail.com' : `user${i}@gmail.com`
@@ -48,7 +48,7 @@ Factory.blueprint('App/Models/User', async (faker, i, data) => {
   }
 })
 
-Factory.blueprint('App/Models/Room', async (faker, i, data) => {
+Factory.blueprint('App/Models/Room', (faker, i, data) => {
   return {
     name: ['Room 1', 'Room 2', 'Room 3', 'Room 4', 'Room 5'][i],
     address: ['8th Floor AC Building', '6th Floor AC Building', '5th Floor AC Building', '9th Floor HL Building', '8th Floor 3A Building'][i]
@@ -65,7 +65,7 @@ Factory.blueprint('App/Models/Meeting', async () => {
   }
 })
 
-Factory.blueprint('App/Models/MeetingType', async (faker, i) => {
+Factory.blueprint('App/Models/MeetingType', (faker, i) => {
   return {
     type: Object.values(meetingTypes)[i]
   }
