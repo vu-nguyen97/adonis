@@ -21,11 +21,11 @@ const roles = {
   2: 'user'
 }
 const meetingTypes = {
-  0: "Meeting",
-  1: "Event",
-  2: "Birthday",
-  3: "Conference",
-  4: "Party",
+  1: "Meeting",
+  2: "Event",
+  3: "Birthday",
+  4: "Conference",
+  5: "Party",
 }
 
 const random = (min, max) => {

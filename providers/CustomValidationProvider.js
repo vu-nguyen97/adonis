@@ -1,5 +1,6 @@
 'use strict'
 
+const moment = require('moment')
 const { ServiceProvider } = require('@adonisjs/fold')
 
 class CustomValidationProvider extends ServiceProvider {
@@ -59,6 +60,14 @@ class CustomValidationProvider extends ServiceProvider {
       throw 'Meeting type not found!'
     }
   }
+
+  async checkAvailableTimeFn(data, field, message, args, get) {
+    const start_time = get(data, field)
+    const isAvailable = moment(start_time).isAfter(new Date())
+    if (!isAvailable) {
+      throw 'Error: Please chose another time for meeting.'
+    }
+  }
   
   /**
    * Attach context getter when all providers have
@@ -75,6 +84,7 @@ class CustomValidationProvider extends ServiceProvider {
     Validator.extend('userMeetingExists', this.userMeetingExistsFn);
     Validator.extend('roomExists', this.roomExistsFn);
     Validator.extend('meetingTypeExists', this.meetingTypeExistsFn);
+    Validator.extend('checkAvailableTime', this.checkAvailableTimeFn);
   }
 }
 
