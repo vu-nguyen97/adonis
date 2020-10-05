@@ -68,6 +68,15 @@ class CustomValidationProvider extends ServiceProvider {
       throw 'Error: Please chose another time for meeting.'
     }
   }
+
+  async endTimeInvaildFn(data, field, message, args, get) {
+    const end_time = get(data, field)
+    const { start_time } = data
+    const isAvailable = moment(end_time).isAfter(start_time)
+    if (!isAvailable) {
+      throw 'Error: Please chose another time for meeting.'
+    }
+  }
   
   /**
    * Attach context getter when all providers have
@@ -85,6 +94,7 @@ class CustomValidationProvider extends ServiceProvider {
     Validator.extend('roomExists', this.roomExistsFn);
     Validator.extend('meetingTypeExists', this.meetingTypeExistsFn);
     Validator.extend('checkAvailableTime', this.checkAvailableTimeFn);
+    Validator.extend('endTimeInvaild', this.endTimeInvaildFn);
   }
 }
 

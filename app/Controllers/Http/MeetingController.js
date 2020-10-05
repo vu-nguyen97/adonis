@@ -16,8 +16,8 @@ class MeetingController {
         .count()
 
       if(meetingExist[0]['count(*)']) {
-        return response.send({
-          message: { error: 'Room will be used during that time.' }
+        return response.status(400).send({
+          message: 'Room will be used during that time.'
         })
       }
 
@@ -42,7 +42,7 @@ class MeetingController {
 
     const meeting = await Meeting.find(id)
     if (!meeting) {
-      return response.status(500).send('Error! Can\'t update this meeting.')
+      return response.status(400).send('Error! Can\'t update this meeting.')
     }
 
     const meetingTimeExist = await Meeting
@@ -52,7 +52,7 @@ class MeetingController {
       .count()
       
     if (meetingTimeExist[0]['count(*)']) {
-      return response.send({
+      return response.status(400).send({
         message: 'Edit failed: Room will be used during that time.'
       })
     }
@@ -77,7 +77,7 @@ class MeetingController {
     if (meeting) {
       return meeting
     }
-    return response.send({
+    return response.status(400).send({
       message: 'Error: not found this meeting_id'
     })
   }
