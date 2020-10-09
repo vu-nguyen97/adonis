@@ -1,5 +1,6 @@
 'use strict'
 
+const moment = require('moment')
 const UserMeeting = use('App/Models/UserMeeting')
 const User = use('App/Models/User')
 const roles = {
@@ -59,17 +60,36 @@ class UserController {
   }
 
   async meeting ({ auth, request, response }) {
+    let startTime = request.input('start_time') || new Date
+    startTime = moment(startTime).format('YYYY-MM-DD 00:00:00')
+
     const user = await auth.getUser()
-    const meetings = await UserMeeting
+    let endTime = request.input('end_time')
+    if (endTime) {
+      endTime = moment(endTime).format('YYYY-MM-DD 23:59:59')
+      return await UserMeeting
       .query()
       .where('user_id', user.id)
       .with('meeting', builder => {
+        builder.andWhere('start_time', '>', startTime)
+        builder.andWhere('end_time', '<', endTime)
+        builder.with('meetingType')
         builder.with('room')
         builder.with('users')
       })
       .fetch()
+    }
 
-    return meetings
+    return await UserMeeting
+      .query()
+      .where('user_id', user.id)
+      .with('meeting', builder => {
+        builder.andWhere('start_time', '>', startTime)
+        builder.with('meetingType')
+        builder.with('room')
+        builder.with('users')
+      })
+      .fetch()
   }
 }
 

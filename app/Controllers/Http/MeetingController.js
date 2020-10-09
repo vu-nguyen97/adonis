@@ -66,21 +66,6 @@ class MeetingController {
 
     return await meeting.save()
   }
-
-  async index ({params, response}) {
-    const meeting_id = params.meeting_id
-    const meeting = await Meeting
-      .query()
-      .where('id', meeting_id)
-      .with('room')
-      .first()
-    if (meeting) {
-      return meeting
-    }
-    return response.status(400).send({
-      message: 'Error: not found this meeting_id'
-    })
-  }
 }
 
 module.exports = MeetingController

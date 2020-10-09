@@ -26,11 +26,13 @@ Route.group(() => {
   Route.get('user/meetings', 'UserController.meeting')
 
   Route.post('room-list/', 'RoomController.store').validator('Room')
-  Route.get('room-list/', 'RoomController.index')
+  Route.get('room-list/:meeting_id?', 'RoomController.index')
+  Route.get('room/', 'RoomController.getRoomsInfo')
   
   Route.put('meeting/', 'MeetingController.update').validator('Meeting')
   Route.post('meeting/', 'MeetingController.store').validator('Meeting')
-  Route.get('meeting/:meeting_id', 'MeetingController.index')
+
+  Route.get('meeting_type', 'MeetingTypeController.getMeetingTypesInfo')
 
   Route.post('meeting/add-person', 'UserMeetingController.store').validator('UserMeeting')
   Route.delete('meeting/add-person', 'UserMeetingController.destroy')

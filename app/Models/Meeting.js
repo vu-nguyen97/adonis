@@ -7,6 +7,9 @@ class Meeting extends Model {
   room() {
     return this.belongsTo('App/Models/Room')
   }
+  meetingType() {
+    return this.belongsTo('App/Models/MeetingType')
+  }
   users() {
     return this
       .belongsToMany('App/Models/User')
