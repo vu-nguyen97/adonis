@@ -26,3 +26,7 @@ Run the following command to run startup migrations.
 ```js
 adonis migration:run
 ```
+## Demo
+Link: https://book-room-fe.herokuapp.com/  
+Account: user1  
+Password: 123  
